@@ -5,7 +5,6 @@ class Interface
 		@deck_class = Deck.new
 		@deck_class.deck
 		@deck_class.shuffle
-		@players = Array.new
 	end
 
 	# Creates player object for each player and add into players array
