@@ -20,6 +20,12 @@ class Interface
     puts "\nWhat's player #{index}'s name?"
     gets.chomp
   end
+
+  def show_hand(player)
+    player.hand.each do |card|
+      puts card.name
+    end
+  end
 end
 
 class Player
@@ -43,9 +49,9 @@ class Deck
 
   # Generates deck of 52 cards
   def deck
-    POWER.each do |card_power|
+    POWER.each do |power|
       SUITS.each do |suite|
-        @deck.push(card_power + ' ' + suite)
+        @deck.push(Card.new(power + ' ' + suite, suite, power))
       end
     end
   end
@@ -56,6 +62,16 @@ class Deck
 
   def deal(card_number)
     Array.new(card_number) { @deck.pop }
+  end
+end
+
+class Card
+  attr_accessor :name, :suite, :power
+
+  def initialize(name, suite, power)
+    @name = name
+    @suite = suite
+    @power = power
   end
 end
 
