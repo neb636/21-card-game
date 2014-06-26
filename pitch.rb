@@ -1,6 +1,8 @@
 # TODO: Move all classes into seprate files once fleshed out
 
 class Interface
+  Player = Struct.new(:name, :hand, :score)
+
   def initialize
     @deck_class = Deck.new
     @deck_class.deck
@@ -9,9 +11,8 @@ class Interface
 
   # Creates player object for each player and add into players array
   def create_players
-    @player1 = Player.new(player_name(1), @deck_class.deal(5))
-    @player2 = Player.new(player_name(2), @deck_class.deal(5))
-    @players = [@player1, @player2]
+    @player1 = Player.new(player_name(1), @deck_class.deal(5), 0)
+    @player2 = Player.new(player_name(2), @deck_class.deal(5), 0)
   end
 
   private
@@ -25,16 +26,6 @@ class Interface
     player.hand.each do |card|
       puts card.name
     end
-  end
-end
-
-class Player
-  attr_accessor :name, :hand, :score
-
-  def initialize(name, hand)
-    @name = name
-    @hand = hand
-    @score = 0
   end
 end
 
