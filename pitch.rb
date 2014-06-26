@@ -9,7 +9,7 @@ class Interface
     @deck_class.shuffle
   end
 
-  # Creates player object for each player and add into players array
+  # Creates player object for each player
   def create_players
     @player1 = Player.new(player_name(1), @deck_class.deal(5), 0)
     @player2 = Player.new(player_name(2), @deck_class.deal(5), 0)
