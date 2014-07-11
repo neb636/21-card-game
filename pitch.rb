@@ -30,6 +30,10 @@ class Interface
 end
 
 class Deck
+  # The difference in power and game_point is power is a cards value when thrown and
+  # game_point is how much a card is worth after the hand when counting game points
+  Card = Struct.new(:name, :suite, :power, :game_point)
+
   # Set constants
   POWER = %w(2 3 4 5 6 7 8 9 10 J Q K A)
   SUITS = %w(spade heart club diamond)
@@ -42,7 +46,7 @@ class Deck
   def deck
     POWER.each do |power|
       SUITS.each do |suite|
-        @deck.push(Card.new(power + ' ' + suite, suite, power))
+        @deck.push(Card.new(power + ' ' + suite, suite, set_power(power), set_game_point(power)))
       end
     end
   end
@@ -54,15 +58,41 @@ class Deck
   def deal(card_number)
     Array.new(card_number) { @deck.pop }
   end
-end
 
-class Card
-  attr_accessor :name, :suite, :power
+  private
 
-  def initialize(name, suite, power)
-    @name = name
-    @suite = suite
-    @power = power
+  def set_power(power)
+    case power
+    when 'J'
+      return 11
+    when 'Q'
+      return 12
+    when 'K'
+      return 13
+    when 'A'
+      return 14
+    else
+      return power.to_i
+    end
+  end
+
+  # In pitch when counting game cards are not given their normal value.
+  # Set point value accordingly.
+  def set_game_point(power)
+    case power
+    when '10'
+      return 10
+    when 'J'
+      return 1
+    when 'Q'
+      return 2
+    when 'K'
+      return 3
+    when 'A'
+      return 4
+    else
+      return 0
+    end
   end
 end
 
