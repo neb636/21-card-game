@@ -35,8 +35,23 @@ class Deck
   Card = Struct.new(:name, :suite, :power, :game_point)
 
   # Set constants
-  POWER = %w(2 3 4 5 6 7 8 9 10 J Q K A)
   SUITS = %w(spade heart club diamond)
+
+  POWER = {
+    '2' =>  2,
+    '3' =>  3,
+    '4' =>  4,
+    '5' =>  5,
+    '6' =>  6,
+    '7' =>  7,
+    '8' =>  8,
+    '9' =>  9,
+    'T' => 10,
+    'J' => 11,
+    'Q' => 12,
+    'K' => 13,
+    'A' => 14
+  }
 
   def initialize
     @deck = []
@@ -44,9 +59,9 @@ class Deck
 
   # Generates deck of 52 cards
   def deck
-    POWER.each do |power|
+    POWER.each do |key, power|
       SUITS.each do |suite|
-        @deck.push(Card.new(power + ' ' + suite, suite, set_power(power), set_game_point(power)))
+        @deck.push(Card.new(key + ' ' + suite, suite, power, set_game_point(key)))
       end
     end
   end
@@ -61,26 +76,11 @@ class Deck
 
   private
 
-  def set_power(power)
-    case power
-    when 'J'
-      return 11
-    when 'Q'
-      return 12
-    when 'K'
-      return 13
-    when 'A'
-      return 14
-    else
-      return power.to_i
-    end
-  end
-
   # In pitch when counting game cards are not given their normal value.
   # Set point value accordingly.
   def set_game_point(power)
     case power
-    when '10'
+    when 'T'
       return 10
     when 'J'
       return 1
